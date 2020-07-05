@@ -21,8 +21,7 @@ The following are the other main packages required.
 
 ## Steps for Execution
 - The entire code for this project is present in ```Emily_bronte.R```
-- The datasets are also present in this documentary 
-- Finally, I have also attached visualization pictures in this repository
+- I have also attached visualization pictures in this repository
 
 ## License
 This repository is licensed under MIT License. 
