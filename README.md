@@ -10,8 +10,9 @@ The UTF-8 plain text for this novel was sourced from [Project Gutenberg](https:/
 
 ## Installation
 Install the required package as follows
-``` install.packages(gutenbergr)
-    library(gutenbergr)
+``` 
+install.packages(gutenbergr)
+library(gutenbergr)
 ```
 ## Dependencies
 The following are the other main packages required. 
