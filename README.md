@@ -3,7 +3,7 @@
 Recently, I happen to come across [Text Mining with R](https://www.tidytextmining.com/) written by [Julia Silge](https://juliasilge.com/) and [David Robinson](http://varianceexplained.org/) while exploring different datasets and packages available in R and was immediately drawn towards it. I had no prior knowledge about text mining or sentimental analysis, and I decided to read the book and put my knowledge into practice. 
 
 This Repository contains code for Sentiment analysis with text mining using gutenbergr package on Emily Bronte's Wuthering Heights using R programming language. This novel is dark. No wonder that it was received with mixed reviews when its first edition was published in 1847. 
-The UTF-8 plain text for this novel was sourced from [Project Gutenberg](https://www.gutenberg.org/) using ```gutenbergr``` package.
+The UTF-8 plain text file for this novel was sourced from [Project Gutenberg](https://www.gutenberg.org/) using ```gutenbergr``` package. Project Gutenberg provides over 60,000 books.
 
 ## Pre-requisites
 - R installation
