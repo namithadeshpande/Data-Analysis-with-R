@@ -14,26 +14,25 @@ Emily_Bronte <- gutenberg_download(768)
 #converting each row into tokens 
 Tidy_Bronte <- Emily_Bronte %>%
   unnest_tokens(word,text) %>% #split into individual words
-  mutate(line_number = row_number()) %>%
   anti_join(stop_words) # discarding stop words such as the, of, if so on
 
 #visualizing word frequencies 
 Tidy_Bronte %>%
   count(word, sort = TRUE) %>% # counting each word frequency
   filter(n > 100) %>% # filter with frequency > 100
-  mutate(word = reorder(word, n)) %>%
+  mutate(word = reorder(word, n)) %>% 
   ggplot(aes(word, n),fill()) + #plot
   geom_col(aes(fill=word), color = "black", size = .7, 
            show.legend = FALSE) + # each bar
   xlab(NULL) + #xtitle
   ylab("Frequency")+ #ytitle
-  coord_flip()+
+  coord_flip()+ #flip x and y
   labs(title = "Word frequency in \"Wuthering Heights\"")+ #plot title
   scale_fill_viridis(option = "magma", discrete = TRUE) + #custom theme and coloring
   theme_pander(base_size = 18, pc = "white") 
 
 #using nrc lexicon for sentiment analysis
-nrc_emotions <- get_sentiments("nrc") %>% # filtering using 4 emotion categories
+nrc_emotions <- get_sentiments("nrc") %>% # filtering only 4 out of all the available emotions
   filter(sentiment == "joy" |
            sentiment == "anger" |
            sentiment == "fear" |
@@ -42,7 +41,7 @@ nrc_emotions <- get_sentiments("nrc") %>% # filtering using 4 emotion categories
 TB_emotions <- Tidy_Bronte %>%
   inner_join(nrc_emotions) %>% # matching words with sentiments
   count(word, sentiment) %>% # count the words associated with sentiments
-  arrange(sentiment) 
+  arrange(sentiment)  #order by sentiments
 
 #visualizing using nrc lexicon 
 TB_emotions %>% 
@@ -56,7 +55,7 @@ TB_emotions %>%
     title = "Top 10 words clustered by sentiment", 
     x = NULL, 
     y = "number of occurrences" 
-  ) + #title
+  ) + #title of the plot and axis
   scale_fill_viridis(option = "viridis", discrete = TRUE) +
   facet_wrap(~sentiment, scales = "free_y") + 
   coord_flip() + # flip axes
