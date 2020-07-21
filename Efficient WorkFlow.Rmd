@@ -5,6 +5,7 @@ date: "21/07/2020"
 output: html_document
 ---
 
+# Data Source - https://data.world/dataquest/book-reviews
 ```{r}
 library(tidyverse)
 reviews <- read_csv("book_reviews.csv")
