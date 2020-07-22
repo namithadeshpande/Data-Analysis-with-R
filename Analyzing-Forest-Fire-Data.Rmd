@@ -1,0 +1,95 @@
+---
+title: "Analyzing Forest Fire Data"
+author: "Namitha Deshpande"
+date: "22/07/2020"
+output: html_document
+---
+
+Data Source - https://archive.ics.uci.edu/ml/machine-learning-databases/forest-fires/
+
+```{r}
+#Loading packages
+library(readr)
+library(dplyr)
+library(ggplot2)
+library(magrittr)
+library(purrr)
+```
+
+```{r}
+#Loading our dataset
+forest_data <- read.csv("forestfires.csv")
+```
+The "forestfires.csv" contains 517 rows and 13 columns in total. We will be performing exploratory analysis to better understand the data 
+
+Creating a bar chart showing the number of forest fires occurring during each month to determine in which month are forest fires most common. 
+```{r}
+#obtaining month-wise forest fire data
+month_fires <- forest_data %>%
+  mutate(month = factor(month, levels = c("jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec")))%>%
+  group_by(month) %>%
+  summarize(total_fires = n())
+
+#bar-plot
+ggplot(data = month_fires,
+       aes(x = month, y = total_fires))+
+  geom_bar(stat = "identity")+
+  labs(title = "Forest Fires by Month")+
+  theme(panel.background = element_rect(fill = "white"))
+```
+
+Creating a bar chart showing the number of forest fires occurring during each day of a week to determine which day of the week gets highest number of forest fires. 
+
+```{r}
+#Obtaining day-wise forest fires data
+day_fires <- forest_data %>%
+  mutate(day = factor(day, levels = c("sun", "mon", "tue", "wed", "thu", "fri", "sat")))%>%
+  group_by(day) %>%
+  summarize(total_fires = n())
+
+#bar-plot
+ggplot(data = day_fires) +
+  aes(x = day, y = total_fires) +
+  geom_bar(stat = "identity") +
+  labs(title = "Forest Fires by Day of the Week") +
+  theme(panel.background = element_rect(fill = "white"))
+```
+
+Creating boxplots for visualizing forest fires by month and day of the week
+
+```{r}
+## Write the function
+create_boxplots <- function(x, y) {
+  ggplot(data = forest_data) + 
+    aes_string(x = x, y = y) +
+    geom_boxplot() +
+    theme(panel.background = element_rect(fill = "white"))
+}
+
+## Assign x and y variable names 
+x_var_month <- names(forest_data)[3] ## month
+x_var_day <- names(forest_data)[4] ## day
+y_var <- names(forest_data)[5:12]
+
+## use the map() function to apply the function to the variables of interest
+month_box <- map2(x_var_month, y_var, create_boxplots) 
+day_box <- map2(x_var_day, y_var, create_boxplots) 
+```
+
+Create scatter plots to see which variables may affect forest fire size: 
+
+```{r}
+## write the function 
+create_scatterplots = function(x, y) {
+  ggplot(data = forest_data) + 
+    aes_string(x = x, y = y) +
+    geom_point() +
+    theme(panel.background = element_rect(fill = "white"))
+}
+## Assign x and y variable names 
+x_var_scatter <- names(forest_data)[5:12]
+y_var_scatter <- names(forest_data)[13]
+
+## use the map() function to apply the function to the variables of interest
+scatters <- map2(x_var_scatter, y_var_scatter, create_scatterplots)
+```
