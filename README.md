@@ -1,6 +1,6 @@
 # Data Analysis with R
 ## Description
-This repository contains my exploratory data analysis projects using R. All source code can be found here.
+This repository contains my exploratory data analysis projects using R and several other packages included in Tidyverse. All source code for these projects can be found down below.
 
 ## Projects List
 - [Text Mining Emily Bronte Novels](https://github.com/namithadeshpande/Data-Analysis-with-R/blob/master/Emily_bronte.R)
