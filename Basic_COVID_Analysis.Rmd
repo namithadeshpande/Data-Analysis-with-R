@@ -18,7 +18,7 @@ This analysis uses a Kaggle dataset - https://www.kaggle.com/sudalairajkumar/nov
 We will load and quickly scan the first few rows of the data.
 
 ```{r}
-covid_data <- read.csv("C:/Users/namit/Desktop/COVID_R/datasets_494724_994000_COVID19_line_list_data.csv")
+covid_data <- read.csv("DATASET")
 head(covid_data)
 ```
 
