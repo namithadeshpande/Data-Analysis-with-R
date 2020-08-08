@@ -1,0 +1,67 @@
+---
+title: "Basic_COVID_Analysis"
+author: "Namitha Deshpande"
+date: "08/08/2020"
+output: html_document
+---
+### **PACKAGE**
+For this simple analysis, we will be using the **"Hmisc : Miscellaneous"** package. It Contains many functions useful for data analysis, high-level graphics, utility operations, functions for computing sample size and power, importing and annotating datasets, imputing missing values, advanced table making, variable clustering, character string manipulation, conversion of R objects to LaTeX and HTML code, and re-coding variables.
+
+```{r}
+library(Hmisc)
+```
+
+### **DATASET**
+
+This analysis uses a Kaggle dataset - https://www.kaggle.com/sudalairajkumar/novel-corona-virus-2019-dataset
+
+We will load and quickly scan the first few rows of the data.
+
+```{r}
+covid_data <- read.csv("C:/Users/namit/Desktop/COVID_R/datasets_494724_994000_COVID19_line_list_data.csv")
+head(covid_data)
+```
+
+### **Cleaning the data**
+
+```{r}
+covid_data$death <- as.integer(covid_data$death != 0)
+```
+
+### **Simple Analysis**
+
+Here, we will be using mainly age and gender attributes for our simple analysis
+
+```{r}
+#AGE
+# claim: people who die are older
+dead = subset(covid_data, death == 1)
+alive = subset(covid_data, death == 0)
+mean(dead$age, na.rm = TRUE)
+mean(alive$age, na.rm = TRUE)
+
+# is this statistically significant?
+t.test(alive$age, dead$age, alternative="two.sided", conf.level = 0.99)
+# normally, if p-value < 0.05, we reject null hypothesis
+# here, p-value ~ 0, so we reject the null hypothesis and 
+# conclude that this is statistically significant
+```
+
+This analysis showed that older people have greater chances of death compared to younger patients.
+
+```{r}
+# GENDER
+# claim: gender has no effect
+men = subset(covid_data, gender == "male")
+women = subset(covid_data, gender == "female")
+mean(men$death, na.rm = TRUE) #8.5%!
+mean(women$death, na.rm = TRUE) #3.7%
+# is this statistically significant?
+t.test(men$death, women$death, alternative="two.sided", conf.level = 0.99)
+# 99% confidence: men have from 0.8% to 8.8% higher chance
+# of dying.
+# p-value = 0.002 < 0.05, so this is statistically
+# significant
+```
+
+In conclusion, we can say that men have higher chances of death compared to female patients
