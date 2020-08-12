@@ -10,4 +10,4 @@ This repository contains my exploratory data analysis projects using R and sever
 - [Association Rules](https://github.com/namithadeshpande/Data-Analysis-with-R/blob/master/Association_Rules.Rmd) - In this project, I have used the titanic dataset to perform association rule mining to determine which class of passengers survived the tragedy using the `arules` and `arulesViz` packages.
 
 ## License
-This repository is licensed under MIT License. 
+This repository is licensed under [MIT License](https://github.com/namithadeshpande/Data-Analysis-with-R/blob/master/LICENSE). 
