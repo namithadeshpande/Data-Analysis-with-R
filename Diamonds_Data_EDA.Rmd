@@ -1,0 +1,142 @@
+---
+title: "Diamonds_Data_EDA"
+author: "Namitha Deshpande"
+date: "16/08/2020"
+output: html_document
+---
+
+# **Exploratory Data Analysis of `diamonds` Dataset**
+
+In statistics, exploratory data analysis is an approach to analyzing data sets to summarize their main characteristics, often with visual methods. A statistical model can be used or not, but primarily EDA is for seeing what the data can tell us beyond the formal modeling or hypothesis testing task.
+
+### **Dataset**
+
+There are a total of 53,940 diamonds in the dataset with 10 features (carat, cut, color, clarity, depth, table, price, x,
+y, and z)
+
+We notice that the dataset is complete amd contains no missing values
+
+```{r}
+library(ggplot2)
+data("diamonds")
+summary(diamonds)
+```
+
+### **Summary Statistics**
+
+Describe a dataset by summarizing its variables along 5 or more aspects such as central tendency, the distribution or the statistical dispersion. 
+
+```{r}
+#median and inter-quartile summary
+fivenum(diamonds$price) 
+
+#Boxplot hints towards possible outliers
+boxplot(diamonds$price)
+boxplot(diamonds$carat)
+```
+
+Check for outliers, check for their distance from the local extremes and obvious errors
+
+### **Statistical Distribution**
+
+Probability Distribution gives the possibility of occurrence of different events. It can be applied to both discrete and continuous variables.
+
+The type of distribution of the dataset can be tested using visualization or hypothesis test.
+
+```{r}
+#Histogram to test the distribution
+hist(diamonds$price)
+```
+
+We observe a positively or right skewed distribution for price variable with highest frequency between 0 and 5000 range. 
+
+We will confirm that the price variable does not have normal distribution using `qqnorm()` function. If the distribution is normal, we will get a straight line, instead here we see a sigmoid curve.
+
+```{r}
+qqnorm(diamonds$price)
+```
+
+Same process can be applied to other variables as well
+
+### **Hypothesis Testing for Distribution**
+
+Under this, the data is compared against an ideal model. The data is tested to satify either null hypothesis or alternative hypothesis.
+
+Shapiro-Wilk normality test is used here. Null Hypothesis states the data is normally distributed and alternative hypothesis rejects the null hypothesis. 
+
+The deciding factor is p-value.If p-value >= 0.05 the null hypothesis is rejected and alternative hypothesis is rejected and vice versa.
+
+```{r}
+diam = as.data.frame(diamonds)
+set.seed(50)
+mysample = sample.int(n=53940, #total number of rows
+                      size=5000, #selecting random sample
+                      replace = F)
+shapiro.test(diam[mysample,7]) #test for price
+shapiro.test(diam[mysample,1]) #test for carat
+```
+
+Here the p-value is significant and well over 0.05, hence we reject null hypothesis.
+
+### **Statistical Tests to find relation between variables**
+
+We will first visualize relation between numeric data price and categorical data cut using box plot.
+
+We observe that the median varies a bit, but the boxes lie in almost same range. Hence, we will use the Kruskal-Wallis test to check if there is significant difference between the groups based on p-value
+
+The result says that each group either costs lower or higher than the other but does not say by how much. 
+
+```{r}
+#Relation b/w numeric and categorical data
+boxplot(price ~ cut, data = diamonds)
+kruskal.test(price ~ cut, data = diamonds)
+```
+
+Next we have relation between two numeric data. For this coefficient of correlation is applied. 
+
+The result says that price and carat have strong positive relationship which means that as carat increases price increases and vice-versa.
+
+```{r}
+#Spearman method is used for skewed distribution
+cor(diamonds$price, diamonds$carat,
+    method = "spearman")
+```
+
+We can also view the relation by plotting a scatter plot as follows:
+
+```{r}
+plot(diamonds$price, diamonds$carat)
+```
+
+We can also generate a correlation matrix here with all the numeric variables involved.
+
+```{r}
+as.dist(cor(diamonds[,c(1,5:10)],
+    method = "spearman"))
+```
+
+The correlation matrix can be plotted for easier understanding using the `heatmap()` function of R Base by tweaking few arguments as follows:
+
+```{r}
+library(GGally)
+
+x = diamonds[,c(1,5:10)]
+ggcorr(x, nbreaks = 20, mid = "white",
+       high = "darkred", label = T,
+       method = c("pairwise", "spearman"))
+```
+
+The last one is relation between categorical data which can be determined using the Chi-Squared Test. Here null hypothesis says no relation and alternative hypothesis states the opposite.
+
+```{r}
+mydata = table(diamonds[,c(2:4)]) #contingency table
+
+chisq.test(diamonds$cut, diamonds$color)
+
+chisq.test(diamonds$cut, diamonds$clarity)
+```
+
+
+
+
+
