@@ -1,0 +1,140 @@
+---
+title: "Titanic Data Analysis"
+author: "ND"
+date: "06/09/2020"
+output: html_document
+---
+
+## Load the packages
+```{r}
+library(readr)
+library(dplyr)
+library(ggplot2)
+library(knitr)
+```
+
+## Load the dataset
+```{r}
+t_data <- read_csv("C:\\Users\\nidhe\\OneDrive\\Desktop\\titanic.csv")
+
+head(t_data)
+```
+
+## Summary Statistics
+
+```{r}
+summary(t_data)
+```
+
+## Data Tidying
+
+```{r}
+#Checking for duplicates
+
+sum(duplicated(t_data$PassengerId)) == 0
+
+t_data <- t_data %>%
+  select(-PassengerId,-Ticket, -Cabin, -Name)
+
+
+#Manipulating AGE
+
+is.na(t_data$Age)
+#median method
+
+age.median <- median(t_data$Age, na.rm = TRUE)
+
+t_data[is.na(t_data$Age), "Age"] <- age.median
+
+table(is.na(t_data$Age))
+
+#Manipulating Embarked
+
+summary(t_data$Embarked)
+
+is.na(t_data$Embarked)
+
+#mode method
+
+t_data[is.na(t_data$Embarked), "Embarked"] <- "S"
+
+table(is.na(t_data$Embarked))
+
+#Manipulating Fare
+
+fare.median <- median(t_data$Fare, na.rm = TRUE)
+
+t_data[is.na(t_data$Fare), "Fare"] <- fare.median
+
+table(is.na(t_data$Fare))
+
+#Converting into factors
+
+t_data <- t_data %>%
+  mutate(Pclass = factor(Pclass),
+         Survived = factor(Survived),
+         Sex = factor(Sex),
+         Embarked = factor(Embarked))
+
+summary(t_data)
+
+```
+
+
+## Data Exploration
+
+```{r}
+#survival vs Non-survival
+
+ggplot(t_data, aes(x=Survived)) +
+  theme_bw() +
+  geom_bar(fill = "Red") + 
+  labs(title = "Titanic Survival",
+       y = "Passengers Count")
+
+#Survival based on Sex
+
+ggplot(t_data, aes(x=Sex, fill = Survived)) +
+  theme_bw() +
+  geom_bar() + 
+  labs(title = "Titanic Survival by Sex",
+       y = "Passengers Count")
+
+#Survival by Pclass
+
+ggplot(t_data, aes(x=Pclass, fill = Survived)) +
+  theme_bw() +
+  geom_bar() + 
+  labs(title = "Titanic Survival by Passenger Class",
+       y = "Passengers Count")
+
+#Survival by siblings or spouse
+ggplot(t_data, aes(x=SibSp, fill = Survived)) +
+  theme_bw() +
+  geom_bar() + 
+  labs(title = "Titanic Survival by Number of siblings or Spouse",
+       y = "Passengers Count")
+
+# Combine sex along Pclass
+
+ggplot(t_data, aes(x=Sex, fill = Survived)) +
+  theme_bw() +
+  facet_wrap(~Pclass) +
+  geom_bar() + 
+  labs(title = "Titanic Survival by Sex and Passenger class",
+       y = "Passengers Count")
+
+#combine age along Pclass, Sex
+
+ggplot(t_data, aes(x=Age, fill = Survived)) +
+  theme_bw() +
+  facet_wrap(Sex~Pclass) +
+  geom_bar() + 
+  labs(title = "Titanic Survival by Sex, Age and Passenger class",
+       y = "Passengers Count")
+
+```
+
+
+
+
