@@ -9,7 +9,7 @@ This repository contains my exploratory data analysis projects using R and sever
 - [EDA of Diamonds Dataset](https://github.com/namithadeshpande/Data-Analysis-with-R/blob/master/Diamonds_Data_EDA.Rmd) - This project uses the `diamonds` dataset of `ggplot2` package to perform exploratory data analysis using few statistical methods such as summary statistics, hypothesis tests and statistical distributions
 - [Investigating COVID Virus Trends](https://github.com/namithadeshpande/Data-Analysis-with-R/blob/master/Investigating-COVID-Virus-Trends.Rmd) - This project performs kaggle data analysis to understand which country has the highest number of cases against total number of testing performed using `tidyverse` package. 
 - [Text Mining Emily Bronte Novels](https://github.com/namithadeshpande/Data-Analysis-with-R/blob/master/Emily_bronte.R) - This Project involved Text Mining and Sentiment Analysis to predict the tone of the book using `gutenbergr` package. 
-- [Titanic Dataset Analysis]() - This project contains Exploratory Data Analysis results of the titanic dataset. I have used the following packages `readr`, `dplyr` and `ggplot2` of tidyverse
+- [Titanic Dataset Analysis](https://github.com/namithadeshpande/Data-Analysis-with-R/blob/master/Titanic_data_analysis.Rmd) - This project contains Exploratory Data Analysis results of the titanic dataset. I have used the following packages `readr`, `dplyr` and `ggplot2` of tidyverse
 
 ## License
 This repository is licensed under [MIT License](https://github.com/namithadeshpande/Data-Analysis-with-R/blob/master/LICENSE). 
