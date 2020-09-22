@@ -19,7 +19,7 @@ library(ggplot2)
 Import the data into R.
 
 ```{r}
-combined <- read_csv("C:\\Users\\namit\\Downloads\\combined.csv") 
+combined <- read_csv("combined.csv") 
 survey <- read_tsv("C:\\Users\\namit\\Downloads\\2011_School_Survey\\2011 data files online\\masterfile11_gened_final.txt")
 survey_d75 <- read_tsv("C:\\Users\\namit\\Downloads\\2011_School_Survey\\2011 data files online\\masterfile11_d75_final.txt")
 ```
