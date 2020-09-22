@@ -20,8 +20,8 @@ Import the data into R.
 
 ```{r}
 combined <- read_csv("combined.csv") 
-survey <- read_tsv("C:\\Users\\namit\\Downloads\\2011_School_Survey\\2011 data files online\\masterfile11_gened_final.txt")
-survey_d75 <- read_tsv("C:\\Users\\namit\\Downloads\\2011_School_Survey\\2011 data files online\\masterfile11_d75_final.txt")
+survey <- read_tsv("masterfile11_gened_final.txt")
+survey_d75 <- read_tsv("masterfile11_d75_final.txt")
 ```
 
 Filter `survey` data to include only high schools and select columns needed for analysis based on the data dictionary.
