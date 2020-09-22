@@ -18,6 +18,9 @@ library(ggplot2)
 
 Import the data into R.
 
+Get Data From - https://data.cityofnewyork.us/Education/2011-NYC-School-Survey/mnz3-dyi8 and 
+https://data.world/dataquest/nyc-schools-data/workspace/file?filename=combined.csv
+
 ```{r}
 combined <- read_csv("combined.csv") 
 survey <- read_tsv("masterfile11_gened_final.txt")
